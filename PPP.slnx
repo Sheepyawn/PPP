@@ -3,6 +3,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="0.draft/0.draft.vcxproj" Id="8a7ee48b-802a-4f82-929c-9f042d94be9b" />
   <Project Path="1/1.vcxproj" Id="56d7e470-ac51-4273-a1ac-6fef91d85aaf" />
   <Project Path="2.drill/2.drill.vcxproj" Id="547202e4-b9e9-4cf6-955b-d6aed7ade98a" />
   <Project Path="2.exercises/2.exercises.vcxproj" Id="ebab82d6-9912-49e9-853e-c3edd5e40c77" />
@@ -10,6 +11,7 @@
   <Project Path="3.drill/3.drill.vcxproj" Id="5d66735c-7643-4947-a890-bee875a17a8c" />
   <Project Path="3.exercises/3.exercises.vcxproj" Id="083a868d-f73b-4e83-9fbf-bde9bb34781d" />
   <Project Path="3/3.vcxproj" Id="0ac45a3c-6f33-4b72-a8a3-41ea4ef68962" />
+  <Project Path="4.drill/4.drill.vcxproj" Id="5de541d6-cda9-4947-8ee9-5b59940c1eea" />
+  <Project Path="4.exercises/4.exercises.vcxproj" Id="28cc21b0-7f3a-4592-a2e0-e58f2c5da2c0" />
   <Project Path="4/4.vcxproj" Id="222f1e93-a8c9-4f4b-a4b6-197ca7295e0f" />
-  <Project Path="E:/Projects/Visual Studio/PPP/PPP/PPP.vcxproj" Id="8a7ee48b-802a-4f82-929c-9f042d94be9b" />
 </Solution>
