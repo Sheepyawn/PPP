@@ -9,7 +9,6 @@ int main()
     try
     {
         calculate();
-
         return 0;
     }
     catch (exception& e)
@@ -20,7 +19,6 @@ int main()
     catch (...)
     {
         cerr << "Oops: unknown exception!\n";
-
         return 2;
     }
 }

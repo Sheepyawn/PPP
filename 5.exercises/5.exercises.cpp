@@ -1,5 +1,8 @@
 module exercises;
 
+import std;
+using namespace std;
+
 void error(std::string s)
 {
 	throw runtime_error(s);
@@ -47,17 +50,17 @@ int string_to_positive_integer(string s)
 	if (is_integer(s))
 	{
 		int num = 0;
-		int digit = 1;
-		size_t size = s.size();
+		const size_t size = s.size();
+		unsigned int digit = pow(10, size - 1);
 		int add = -1;
-		for (size_t i = size - 1; i > -1; --i)
+		for (size_t i = 0; i < size; ++i)
 		{
 			add = (s[i] - '0') * digit;
 			//边界检查
 			if (num > numeric_limits<int>::max() - add)
 				return -1;
 			num += add;
-			digit *= 10;
+			digit /= 10;
 		}
 		return num;
 	}

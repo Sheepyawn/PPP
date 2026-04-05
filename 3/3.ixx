@@ -1,7 +1,5 @@
 export module _3;
 
-import std;
-using namespace std;
 
 export void e3_3_1();
 export void e3_4_1_1();

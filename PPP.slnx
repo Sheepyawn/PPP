@@ -19,5 +19,7 @@
   <Project Path="5/5.vcxproj" Id="b020ba6b-c070-4f84-9a6b-287ee8f35bcc" />
   <Project Path="6.drill/6.drill.vcxproj" Id="074a2181-6abc-43ac-a840-2a9e05c2ac11" />
   <Project Path="6/6.vcxproj" Id="3bc243e1-96e0-4d25-946c-964ded712e3d" />
+  <Project Path="7.drill/7.drill.vcxproj" Id="ff2e9991-7cb4-42f9-8e27-fc1be5cb98fb" />
+  <Project Path="7.exercise/7.exercise.vcxproj" Id="0f4b2cba-5d0c-425e-912b-ed8ea7ee020a" />
   <Project Path="7/7.vcxproj" Id="22c3fdb9-84ba-427d-ae72-863d49e47d92" />
 </Solution>

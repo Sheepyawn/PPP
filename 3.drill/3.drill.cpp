@@ -1,5 +1,8 @@
 module drill;
 
+import std;
+using namespace std;
+
 //打印输入的两个数
 void drill_1()
 {

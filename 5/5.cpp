@@ -1,5 +1,8 @@
 module _5;
 
+import std;
+using namespace std;
+
 class Token
 {
 public: 

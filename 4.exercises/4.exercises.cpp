@@ -1,5 +1,8 @@
 module exercises;
 
+import std;
+using namespace std;
+
 double ctok(double c)
 {
 	//int k = c + 273.25;

@@ -1,5 +1,8 @@
 module exercises;
 
+import std;
+using namespace std;
+
 //把英里转换为千米
 void exercise2()
 {

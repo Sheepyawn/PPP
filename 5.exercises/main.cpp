@@ -6,9 +6,9 @@ using namespace std;
 int main()
 {
 	try {
-		//exercise4();
+		exercise4();
 		//exercise5();
-		exercise6();
+		//exercise6();
 		//exercise8();
 
 	}

@@ -1,5 +1,8 @@
 module _3;
 
+import std;
+using namespace std;
+
 //输入数+1
 void e3_3_1()
 {

@@ -1,5 +1,8 @@
 module _2;
 
+import std;
+using namespace std;
+
 //打招呼
 void e2_1()
 {

@@ -43,6 +43,8 @@ namespace PPP
 	}; // range-checked vector
 
 
+
+
 	PPP_EXPORT class Checked_string : public std::string {	// trivially range-checked string (no iterator checking)
 	public:
 		using std::string::string;
@@ -173,10 +175,13 @@ namespace PPP
 	template<typename C>
 	using Iterator = typename C::iterator;
 
+
+
 }
 // make std::min() and std::max() accessible on systems with antisocial macros:
 #undef min
 #undef max
+
 
 template<> struct std::hash<PPP::Checked_string>
 {

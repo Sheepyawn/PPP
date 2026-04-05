@@ -1,5 +1,8 @@
 module drill;
 
+import std;
+using namespace std;
+
 //注释部分是原题目，改正后控制台显示输出结果“Success!”
 
 void drill_1()

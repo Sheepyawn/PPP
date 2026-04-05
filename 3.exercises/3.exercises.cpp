@@ -1,5 +1,8 @@
 module exercises;
 
+import std;
+using namespace std;
+
 //输入字符串，遍历打印其每个字符和对应的ASCII值
 void exercise2()
 {

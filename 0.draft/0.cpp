@@ -1,16 +1,10 @@
-module PPP;
-
+import PPP;
 using namespace std;
-using namespace PPP;
 
 int main()
 {
-    string previous;
-    string current;
-    while (cin >> current)
-    {
-        if (previous == current)
-            cout << "repeated word: " << current << "\n";
-        previous = current;
-    }
+	vector<string> name(5);
+	name.push_back("There's first time for every thing.");
+	cout << name[0];
+
 }

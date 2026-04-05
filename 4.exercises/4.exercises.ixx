@@ -1,9 +1,5 @@
 export module exercises;
 
-import std;
-
-using namespace std;
-
 export void exercise2();
 export void exercise7();
 export void exercise8();

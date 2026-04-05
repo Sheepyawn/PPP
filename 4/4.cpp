@@ -1,5 +1,8 @@
 module _4;
 
+import std;
+using namespace std;
+
 int area(int length, int width)
 {
 	return length * width;

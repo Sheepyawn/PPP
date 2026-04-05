@@ -10,7 +10,7 @@ int main()
 		//drill_2();
 		//drill_3();
 		//drill_4();
-		//drill_5();
+		drill_5();
 		//drill_6();
 		//drill_7();
 		//drill_8();
@@ -30,7 +30,7 @@ int main()
 		//drill_22();
 		//drill_23();
 		//drill_24();
-		drill_25();
+		//drill_25();
 
 		return 0;
 	}

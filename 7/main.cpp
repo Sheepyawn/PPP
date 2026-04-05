@@ -6,6 +6,5 @@ int main()
 	//e7_4();
 	calculate();
 	
-
 	return 0;
 }

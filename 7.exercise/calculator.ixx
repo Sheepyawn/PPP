@@ -1,131 +1,12 @@
-module _7;
+export module calculator;
+
+export void calculate();
 
 import PPP;
-//using namespace std;
-using namespace PPP;
-using std::cout;
-using std::cin;
-using std::abs;
-using std::isspace;
-using std::isalpha;
-using std::isdigit;
-using std::string;
-using std::vector;
-using std::sqrt;
-using std::cerr;
-using std::exception;
+using namespace std;
 
-int f(int i)
-{
-	cout << "Hello~, " << i << '\n';
-	return 0;
-}
-
-int e_abs(int a)
-{
-	return (a >= 0) ? a : -a;
-}
-
-void e7_2()
-{
-	int i = 1;
-	std::cout << "f(i) == " << f(i) << '\n';
-	const int x2{ 9 };
-	cout << "x2 == " << x2 << '\n';
-	cout << "e_abs(8) == " << e_abs(8) << '\n'
-		<< "e_abs(-8) == " << e_abs(-8) << '\n'
-		<< "abs(8) == " << abs(8) << '\n'		//abs(), absolute value;
-		<< "abs(-8) == " << abs(-8) << '\n';
-}
-
-double ff();
-double ff();
-//int ff();
-
-int x = 0;                               // a global variable – avoid those where you can
-int y = 0;
-
-int f()
-{
-	int x = 0;                      // a local variable, hides the global x
-	x = 7;                           // the local x
-	{
-		int x = y;             // local x initialized by global y, hides the previous local x
-		++x;                    // the x from the previous line
-	}
-	++x;                             // the x from the first line of f()
-	return x;
-}
-
-struct X 
-{
-	void f(int x) 
-	{
-		struct Y 
-		{
-			int f() 
-			{ 
-				return 1; 
-			} 
-			int m;
-		};
-		int m;
-		m = x; 
-		Y m2;
-		return f(m2.f());
-	}
-	int m; 
-	void g(int m) 
-	{
-		if (0 < m) 
-			f(m + 2); 
-		else 
-		{
-			g(m + 2.3);
-		}
-	}
-	X() {} 
-	//int m3() {}
-
-	void main() 
-	{
-		X a; a.f(2);
-	}
-};
-
-int my_find(vector<string>, string, int);                    // not naming arguments
-
-void e7_4()
-{
-	vector<string> vs;
-	string s;
-	cout << my_find(vs, s, 3) << '\n';
-}
-
-int my_find(vector<string> vs, string s, int hint)
-// search for s in vs starting at hint
-{
-	if (hint < 0 || vs.size() <= hint)
-		hint = 0;
-	for (int i = hint; i < vs.size(); ++i)        // search starting from hint
-		if (vs[i] == s)
-			return i;
-	for (int i = 0; i < hint; ++i)                    // if we didn’t find s, so search before hint
-		if (vs[i] == s)
-			return i;
-	return -1;
-}
-
-double my_abs(int x)      // warning: buggy code
-{
-	if (x < 3)
-		return -x;
-	else if (x > 3)
-		return x;
-}        // error: no value returned if x is 0
-
-
-//改进第六章的计算器，不使用全局变量ts，使用函数的参数传递ts。
+//继续改进第六章的计算器
+//1.使输入流成为显式的参数，而不只是用cin。2.在Token_stream类里添加istream&参数。
 const char number = '8';
 const char quit = 'Q';
 const string quitkey = "exit";
@@ -144,15 +25,6 @@ const char underscores = '_';
 const char help = 'H';
 const string helpkey = "help";
 
-//void error(std::string s)
-//{
-//    throw runtime_error(s);
-//}
-//
-//void error(string s1, string s2)
-//{
-//    throw runtime_error{ s1 + s2 };
-//}
 
 class Token {
 public:
@@ -172,12 +44,14 @@ public:
 
 class Token_stream {
 public:
+    Token_stream() : is(cin) {};
     Token get();                // get a Token
     void putback(Token t);      // put a token back
     void ignore(char c);
 private:
     bool full{ false };        // is there a Token in the buffer?
     Token buffer{ '0' };         // here is where putback() stores a Token
+    istream& is;
 };
 
 class Variable
@@ -201,7 +75,6 @@ private:
 };
 
 //定义需要用的全局变量。
-//vector<Variable> var_table;
 Symbol_table st;
 
 void Token_stream::putback(Token t)
@@ -219,7 +92,7 @@ Token Token_stream::get()
     }
     char ch = ' ';
     while (ch != '\n' && isspace(ch))
-        cin.get(ch);
+        is.get(ch);
 
     switch (ch) {
     case '\n':
@@ -242,9 +115,9 @@ Token Token_stream::get()
     case '0': case '1': case '2': case '3': case '4':
     case '5': case '6': case '7': case '8': case '9':
     {
-        cin.putback(ch);
+        is.putback(ch);
         double val;
-        cin >> val;
+        is >> val;
         return Token{ number, val };
     }
     default:
@@ -252,10 +125,10 @@ Token Token_stream::get()
         {
             string s;
             s += ch;
-            while (cin.get(ch) && (isalpha(ch) || isdigit(ch) || (ch == underscores)))
+            while (is.get(ch) && (isalpha(ch) || isdigit(ch) || (ch == underscores)))
                 //isdigit(), 字符串中的所有字符都是数字字符，则返回 True，否则返回 False。
                 s += ch;
-            cin.putback(ch);
+            is.putback(ch);
             if (s == letkey)
                 //如果s == "let", 创建一个kind等于let的Token。
                 return Token{ let };
@@ -274,7 +147,7 @@ Token Token_stream::get()
             //否则，创建一个kind为variable, name为s的Token。
             return Token{ variable, s };
         }
-        error("Bad token");
+        PPP::error("Bad token");
     }
 };
 
@@ -291,7 +164,7 @@ void Token_stream::ignore(char c)
     full = false;
 
     char ch = 0;
-    while (cin.get(ch))
+    while (is.get(ch))
         if (ch == c)
             return;
 }
@@ -318,7 +191,7 @@ void Symbol_table::set_value(string s, double d)
             v.value = d;
             return;
         }
-    error("tring to write undefined variable ", s);
+    PPP::error("tring to write undefined variable ", s);
 }
 
 // 检查变量名字是否已定义
@@ -336,7 +209,7 @@ bool Symbol_table::is_declared(string var)
 double Symbol_table::define_name(string var, double val)
 {
     if (is_declared(var))
-        error(var, " declared twice");
+        PPP::error(var, " declared twice");
     var_table.push_back(Variable{ var, val });
     return val;
 }
@@ -372,14 +245,14 @@ double primary(Token_stream& ts)
     {
         double d = expression(ts);
         t = ts.get();
-        if (t.kind != ')') error("')' expected");
+        if (t.kind != ')') PPP::error("')' expected");
         return d;
     }
     case '{':
     {
         double d = expression(ts);
         t = ts.get();
-        if (t.kind != '}') error("'}' expected");
+        if (t.kind != '}') PPP::error("'}' expected");
         return d;
     }
     case number:
@@ -393,7 +266,7 @@ double primary(Token_stream& ts)
     default:
         if (t.kind == print1)
             ts.putback(t);
-        error("primary expected");
+        PPP::error("primary expected");
     }
 }
 
@@ -436,7 +309,7 @@ double term(Token_stream& ts)
         case '/':
         {
             double d = secondary(ts);
-            if (d == 0) error("divide by zero");
+            if (d == 0) PPP::error("divide by zero");
             left /= d;
             t = ts.get();
             break;
@@ -445,7 +318,7 @@ double term(Token_stream& ts)
         {
             double d = secondary(ts);
             if (d == 0)
-                error("%: divide by zero");
+                PPP::error("%: divide by zero");
             left = fmod(left, d);       //fmod()，标准库函数 floating-point modulo
             t = ts.get();
             break;
@@ -489,7 +362,7 @@ double declaration(Token_stream& ts)
 
     Token t2 = ts.get();
     if (t2.kind != '=')
-        error("= missing in declaration of ", t.name);
+        PPP::error("= missing in declaration of ", t.name);
     double d = expression(ts);
     st.define_name(t.name, d);
     return d;
@@ -500,11 +373,11 @@ double square_root_func(Token_stream& ts)
 {
     Token t = ts.get();
     if (t.kind != '(')
-        error("'(' expected after sqrt");
+        PPP::error("'(' expected after sqrt");
     ts.putback(t);
     double d = expression(ts);
     if (d < 0)
-        error("argument of sqrt() should be greater than 0");
+        PPP::error("argument of sqrt() should be greater than 0");
     return sqrt(d);
 }
 
@@ -513,19 +386,19 @@ double power_func(Token_stream& ts)
 {
     Token t = ts.get();
     if (t.kind != '(')
-        error("'(' expected after pow");
+        PPP::error("'(' expected after pow");
     //ts.putback(t);    //这里不把括号放回去，因为expression()不能处理逗号
     double d1 = expression(ts);        //获取第一个参数
     t = ts.get();        //调用expression()后，ts的buffer里应该是‘,’。
     if (t.kind != ',')
-        error("',' expected after the first argument of pow()");
+        PPP::error("',' expected after the first argument of pow()");
     double d2 = expression(ts);       //获取第二个参数
     int index = int(d2);
     if (index != d2)
-        error("index of pow() should be an integer");
+        PPP::error("index of pow() should be an integer");
     t = ts.get();
     if (t.kind != ')')
-        error("')' expected after pow");
+        PPP::error("')' expected after pow");
     return pow(d1, d2);
 }
 
@@ -553,14 +426,14 @@ double statement(Token_stream& ts)
 void print_help()
 {
     cout << "This calculator supports '+', '-', '*', '/', '%', '!' operations." << '\n'
-        << "    To calculate, type expressions like '1+2', '8/4', '(11%(1+2)!)' and I'll return their answers." << '\n'
+        << "To calculate, type expressions like '1+2', '8/4', '(11%(1+2)!)' and I'll return their answers." << '\n' << '\n'
         << "Functions of sqrt() for square root and pow() for exponentiation are available too." << '\n'
-        << "    To use sqrt(), type sqrt(9) and I'll return the square root of 9 (3)." << '\n'
-        << "    To use pow(), type pow(5, 2) and I'll return x to the power of i (25)." << '\n'
-        << "You can use 'let' to define a variable, as 'let x = {2 * (3 + 4) - 5 / 6};'." << '\n'
-        << "    You can use the variable you have defined in later expressions." << '\n'
-        << "    Examples: 'x', 'x+1', 'x%5', 'sqrt(x-2)', and 'pow(2*x, x)'" << '\n'
-        << "    Special variables like pi = 3.1415926535, e = 2.7182818284 and k = 1000 are already defined in the calculator." << '\n'
+        << "To use sqrt(), type sqrt(9) and I'll return the square root of 9 (3)." << '\n'
+        << "To use pow(), type pow(5, 2) and I'll return x to the power of i (25)." << '\n'
+        << "You can use 'let' to define a variable, as 'let x = {2 * (3 + 4) - 5 / 6};'." << '\n' << '\n'
+        << "You can use the variable you have defined in later expressions." << '\n'
+        << "Examples: 'x', 'x+1', 'x%5', 'sqrt(x-2)', and 'pow(2*x, x)'" << '\n'
+        << "Special variables like pi = 3.1415926535, e = 2.7182818284 and k = 1000 are already defined in the calculator." << '\n' << '\n'
         << "Type a newline (Enter key) to end an expression." << '\n';
 }
 
@@ -596,9 +469,3 @@ void calculate()
         }
     }
 }
-
-
-
-
-
-

@@ -1,9 +1,5 @@
 export module exercises;
 
-import std;
-import <ctime>;
-import <cmath>;
-using namespace std;
 
 export void exercise2();
 export void exercise3();

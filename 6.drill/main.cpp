@@ -15,7 +15,6 @@
 //#include "std_lib_facilities.h"
 
 import std;
-
 using namespace std;
 
 void error(string s)

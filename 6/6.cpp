@@ -66,6 +66,9 @@
 
 module _6;
 
+import std;
+using namespace std;
+
 const char number = '8';
 const char quit = 'Q';
 const string quitkey = "exit";

@@ -1,8 +1,5 @@
 export module drill;
 
-import std;
-
-using namespace std;
 
 export void drill_1();
 export void drill_2();
