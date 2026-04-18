@@ -2,9 +2,9 @@
 #include "PPP/Graph.h"
 #include "PPP/Simple_window.h"
 
-using namespace Graph_lib;
+
 int main(int /*argc*/, char* /*argv*/[])
-{
+{ 
     using namespace Graph_lib;                               // our graphics facilities are in Graph_lib
 
     Application app;                                                    // start a Graphics/GUI application
