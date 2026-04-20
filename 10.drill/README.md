@@ -1,0 +1,1 @@
+Origin source:https://github.com/villevoutilainen/ProgrammingPrinciplesAndPracticeUsingQt
