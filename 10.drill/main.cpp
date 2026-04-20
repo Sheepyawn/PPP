@@ -62,15 +62,15 @@ int main(int /*argc*/, char* /*argv*/[])
     win.set_label("Star");
     win.wait_for_button();
 
-    Closed_polyline poly_rect;
+    Open_polyline poly_rect;
     poly_rect.add(Point{ 450, 20 });          // 1
     poly_rect.add(Point{ 407, 147 });         // 5
     poly_rect.add(Point{ 517, 68 });          // 9
     poly_rect.add(Point{ 383, 68 });          // 3
     poly_rect.add(Point{ 493, 147 });         // 7
+    poly_rect.add(Point{ 450, 20 });          // 1
     poly_rect.set_style(Line_style(Line_style::dash, 2));
-    poly_rect.set_color(Color::blue);
-    poly_rect.set_fill_color(Color::green);
+    poly_rect.set_color(Color::red);
     poly_rect.move(60, 130);
     win.attach(poly_rect);
     win.set_label("Another star");
