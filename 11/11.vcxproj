@@ -98,6 +98,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Colormap.cpp" />
+    <ClCompile Include="PPP.ixx" />
     <ClCompile Include="Simple_window.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Graph.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="PPP.h" />
     <ClInclude Include="PPP\Graph.h" />
     <ClInclude Include="PPP\GUI.h" />
     <QtMoc Include="PPP\GUI_private.h" />
@@ -113,6 +115,9 @@
     <ClInclude Include="PPP\Simple_window.h" />
     <ClInclude Include="PPP\std_lib_facilities.h" />
     <ClInclude Include="PPP\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
