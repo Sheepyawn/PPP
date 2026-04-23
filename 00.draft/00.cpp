@@ -5,9 +5,13 @@ using namespace std;
 
 int main()
 {
-	int r = 150;
-	const double sin_30 = sin(3.14159 / 6);
-	const double cos_30 = cos(3.14159 / 6);
-	int man = PPP::narrow_cast<int>(r * cos_30);
-	cout << man;
+    double x = 0;
+    double y = 0;
+    int x_scale = 0;
+    int y_scale = 0;
+    for (int i = 0; i < 10; ++i)
+    {
+        cout << x++ << '\t' << y++ << '\t' << x_scale++ << '\t' << y_scale++ << '\n';
+        x, y, x_scale, y_scale = 0;
+    }
 }

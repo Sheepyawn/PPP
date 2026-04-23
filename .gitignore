@@ -24,3 +24,4 @@ x86/
 
 # 忽略整个Qt构建输出目录
 build/
+10.drill/10.drill.vcxproj
