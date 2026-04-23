@@ -29,13 +29,6 @@
                   "exit"
          Help:
                   "help"
-         Statement:
-                  Expression
-                  sqrt(Expression)
-                  pow(Expression, Expression)
-                  Declaration
-         Declaration:
-                  "let" Variable = Expression 
          Expression:
                   Term
                   Expression "+" Term
@@ -55,6 +48,11 @@
                   "-" Primary
                   "+" Primary
                   Variable
+                  sqrt(Expression)
+                  pow(Expression, Expression)
+                  Declaration
+         Declaration:
+                  "let" Variable = Expression
          Number:
                   floating-point-literal
          Variable: 
@@ -219,6 +217,7 @@ Token Token_stream::get()
             return Token{ variable, s };
         }
         error("Bad token");
+        return Token{};
     }
 };
 
@@ -287,7 +286,6 @@ double Symbol_table::define_name(string var, double val)
 
 double expression();        // forward declaration for primary to call
 
-
 // This function is adapted from Chrinkus/stroustrup-ppp
 // Original source: https://github.com/Chrinkus/stroustrup-ppp
 // 这个函数处理表达式中的变量
@@ -301,6 +299,60 @@ double handle_variable(Token& t)
     else
         ts.putback(t2);
     return st.get_value(t.name);
+}
+
+//定义变量。
+//      变量名 = 表达式;
+double declaration()
+{
+    Token t = ts.get();
+    if (t.kind != variable)
+        error("variable expected in declaration");
+
+    Token t2 = ts.get();
+    if (t2.kind != '=')
+        error("= missing in declaration of ", t.name);
+    //double d = expression();
+    double d = expression();
+    st.define_name(t.name, d);
+    return d;
+}
+
+//算平方根
+double square_root_func()
+{
+    Token t = ts.get();
+    if (t.kind != '(')
+        error("'(' expected after sqrt");
+    //ts.putback(t);            这里不把括号放回去，放回去的话计算sqrt(9) + 1就变成计算sqrt 9 + 1
+    double d = expression();
+    if (d < 0)
+        error("argument of sqrt() should be greater than 0");
+    t = ts.get();
+    if (t.kind != ')')
+        error("')' expected after sqrt");
+    return sqrt(d);
+}
+
+//幂
+double power_func()
+{
+    Token t = ts.get();
+    if (t.kind != '(')
+        error("'(' expected after pow");
+    //ts.putback(t);    //这里不把括号放回去，因为expression()不能处理逗号
+    double d1 = expression();        //获取第一个参数
+    t = ts.get();        //调用expression()后，ts的buffer里应该是‘,’。
+    if (t.kind != ',')
+        error("',' expected after the first argument of pow()");
+    double d2 = expression();       //获取第二个参数
+    int index = int(d2);
+    if (index != d2)
+        error("index of pow() should be an integer");
+    t = ts.get();
+    if (t.kind != ')')
+        error("')' expected after pow");
+    return pow(d1, d2);
 }
 
 // 处理表达式的括号，数字，数字前的正负号，自定义变量。
@@ -334,10 +386,19 @@ double primary()
         return primary();
     case variable:
         return handle_variable(t);
+    case let:
+        //在进入定义之前，“let”放在这个函数的局部变量t里，进入定义后直接不用处理“let”。
+        //return后，t被销毁，“let”被吃掉。
+        return declaration();
+    case square_root:
+        return square_root_func();
+    case power:
+        return power_func();
     default:
         if (t.kind == print1)
             ts.putback(t);
         error("primary expected");
+        return -1;
     }
 }
 
@@ -354,7 +415,7 @@ double secondary()
         {
             if (left == 0)
                 return 1;
-            for (int i = left - 1; i > 0; --i)
+            for (double i = left - 1; i > 0; --i)
                 left *= i;
             t = ts.get();
         }
@@ -423,77 +484,6 @@ double expression()         // deal with + and -
     }
 }
 
-//定义变量。
-//      变量名 = 表达式;
-double declaration()
-{
-    Token t = ts.get();
-    if (t.kind != variable)
-        error("variable expected in declaration");
-
-    Token t2 = ts.get();
-    if (t2.kind != '=')
-        error("= missing in declaration of ", t.name);
-    double d = expression();
-    st.define_name(t.name, d);
-    return d;
-}
-
-//算平方根
-double square_root_func()
-{
-    Token t = ts.get();
-    if (t.kind != '(')
-        error("'(' expected after sqrt");
-    ts.putback(t);
-    double d = expression();
-    if (d < 0)
-        error("argument of sqrt() should be greater than 0");
-    return sqrt(d);
-}
-
-//幂
-double power_func()
-{
-    Token t = ts.get();
-    if (t.kind != '(')
-        error("'(' expected after pow");
-    //ts.putback(t);    //这里不把括号放回去，因为expression()不能处理逗号
-    double d1 = expression();        //获取第一个参数
-    t = ts.get();        //调用expression()后，ts的buffer里应该是‘,’。
-    if (t.kind != ',')
-        error("',' expected after the first argument of pow()");
-    double d2 = expression();       //获取第二个参数
-    int index = int(d2);
-    if (index != d2)
-        error("index of pow() should be an integer");
-    t = ts.get();
-    if (t.kind != ')')
-        error("')' expected after pow");
-    return pow(d1, d2);
-}
-
-//对定义变量或计算算式的表达式进行不同的处理。
-double statement()
-{
-    Token t = ts.get();
-    switch (t.kind) 
-    {
-    case let:
-        //在进入定义之前，“let”放在这个函数的局部变量t里，进入定义后直接不用处理“let”。
-        //return后，t被销毁，“let”被吃掉。
-        return declaration();
-    case square_root:
-        return square_root_func();
-    case power:
-        return power_func();
-    default:
-        //因为没有“let”，所以要把Token放回去，不然expression()从ts获取的是不完整的表达式。
-        ts.putback(t);
-        return expression();
-    }
-}
-
 void print_help()
 {
     cout << "This calculator supports '+', '-', '*', '/', '%', '!' operations." << '\n'
@@ -530,7 +520,7 @@ void calculate()
             if (t.kind == print1)
                 t = ts.get();
             ts.putback(t);
-            cout << "= " << statement() << '\n';
+            cout << "= " << expression() << '\n';
         }
         catch (exception& e)
         {

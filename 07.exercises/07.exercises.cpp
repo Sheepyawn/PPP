@@ -448,7 +448,7 @@ void print_vector(const string& s, const vector<size_t>& v)
 {
 	if_empty_vector(v);
 	cout << s << '\n';
-	for (int x : v)
+	for (size_t x : v)
 		cout << x << '\n';
 }
 

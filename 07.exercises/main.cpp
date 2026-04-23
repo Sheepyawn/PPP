@@ -5,7 +5,7 @@ int main()
 {
 	try
 	{
-		//exercise_1();
+		exercise_1();
 		//exercise_2();
 		//exercise_3();
 		//exercise_4();
@@ -16,7 +16,7 @@ int main()
 		//exercise_10();
 		//exercise_11();
 		//exercise_12();
-		exercise_13();
+		//exercise_13();
 
 		return 0;
 	}

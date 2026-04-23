@@ -21,13 +21,13 @@
     <ClCompile Include="PPP.ixx">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="calculator.ixx">
+    <ClCompile Include="07.exercises.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="07.exercises.ixx">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="07.exercises.cpp">
+    <ClCompile Include="calculator.ixx">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
