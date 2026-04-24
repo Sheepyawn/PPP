@@ -18,9 +18,6 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="06.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="06.ixx">
       <Filter>源文件</Filter>
     </ClCompile>

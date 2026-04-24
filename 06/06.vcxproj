@@ -128,7 +128,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="06.cpp" />
     <ClCompile Include="06.ixx" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
