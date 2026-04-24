@@ -1,12 +1,12 @@
 export module Ex_11;
 
-export void exercise11();
+export void Ex_11();
 
 import std;
 using namespace std;
 
 //计算不同的硬币的总价值
-void exercise11()
+void Ex_11()
 {
 	int pennies, nickels, dimes, quarters, half_dollars, one_dollars;
 

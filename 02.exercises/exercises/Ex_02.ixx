@@ -1,11 +1,11 @@
 export module Ex_02;
 
-export void exercise2();
+export void Ex_02();
 
 import std;
 
 //把英里转换为千米
-void exercise2()
+void Ex_02()
 {
 	std::cout << "Please enter miles and I'll convert it to kilometers.\n";
 	double miles;

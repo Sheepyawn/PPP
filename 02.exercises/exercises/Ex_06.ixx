@@ -1,12 +1,12 @@
 export module Ex_06;
 
-export void exercise6();
+export void Ex_06();
 
 import std;
 using namespace std;
 
 //排序输入的3个整数
-void exercise6()
+void Ex_06()
 {
 	cout << "Please enter three integer values." << endl;
 	int v1, v2, v3;

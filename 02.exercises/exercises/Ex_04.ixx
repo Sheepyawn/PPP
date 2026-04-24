@@ -1,12 +1,12 @@
 export module Ex_04;
 
-export void exercise4();
+export void Ex_04();
 
 import std;
 using namespace std;
 
 //对输入的两个整数做四则运算
-void exercise4()
+void Ex_04()
 {
 	cout << "Please enter two integer values." << endl;
 	int val1, val2;

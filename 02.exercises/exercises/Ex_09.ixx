@@ -1,12 +1,12 @@
 export module Ex_09;
 
-export void exercise9();
+export void Ex_09();
 
 import std;
 using namespace std;
 
 //输入1到4的拼写，打印这个数。
-void exercise9()
+void Ex_09()
 {
 	cout << "Please enter a spelled-out number." << endl;
 	string s;

@@ -1,12 +1,12 @@
 export module Ex_08;
 
-export void exercise8();
+export void Ex_08();
 
 import std;
 using namespace std;
 
 //判断输入数的奇偶
-export void exercise8()
+export void Ex_08()
 {
 	cout << "Please enter an integer value." << endl;
 	int val1;

@@ -1,12 +1,12 @@
 export module Ex_07;
 
-export void exercise7();
+export void Ex_07();
 
 import std;
 using namespace std;
 
 //排序输入的3个字符串
-void exercise7()
+void Ex_07()
 {
 	cout << "Please enter three string values." << endl;		//Steinbeck, Hemingway, Fitzgerald,
 	string s1, s2, s3;

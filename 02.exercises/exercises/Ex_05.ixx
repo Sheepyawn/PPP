@@ -1,12 +1,12 @@
 export module Ex_05;
 
-export void exercise5();
+export void Ex_05();
 
 import std;
 using namespace std;
 
 //对输入的两个浮点数做四则运算
-void exercise5()
+void Ex_05()
 {
 	cout << "Please enter two integer values." << endl;
 	float val1, val2;

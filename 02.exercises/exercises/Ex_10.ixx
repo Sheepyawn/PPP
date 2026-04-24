@@ -1,12 +1,12 @@
 export module Ex_10;
 
-export void exercise10();
+export void Ex_10();
 
 import std;
 using namespace std;
 
 //四则运算
-void exercise10()
+void Ex_10()
 {
 	cout << "Please enter an integer, an operand and an integer." << endl;
 	int v1, v2;
