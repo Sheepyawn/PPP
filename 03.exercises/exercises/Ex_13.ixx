@@ -5,6 +5,7 @@ export void Ex_13();
 import std;
 using namespace std;
 
+// 返回n以内的质数
 vector<int> sieve(const int& n)
 {
 	vector<int> primes{ 2 };
