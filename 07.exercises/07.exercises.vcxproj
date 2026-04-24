@@ -129,9 +129,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="07.exercises.cpp" />
     <ClCompile Include="07.exercises.ixx" />
     <ClCompile Include="calculator.ixx" />
+    <ClCompile Include="exercises\empty_check.ixx" />
+    <ClCompile Include="exercises\Ex_01.ixx" />
+    <ClCompile Include="exercises\Ex_02.ixx" />
+    <ClCompile Include="exercises\Ex_03.ixx" />
+    <ClCompile Include="exercises\Ex_04.ixx" />
+    <ClCompile Include="exercises\Ex_05.ixx" />
+    <ClCompile Include="exercises\Ex_06.ixx" />
+    <ClCompile Include="exercises\Ex_07.ixx" />
+    <ClCompile Include="exercises\Ex_09.ixx" />
+    <ClCompile Include="exercises\Ex_10.ixx" />
+    <ClCompile Include="exercises\Ex_11.ixx" />
+    <ClCompile Include="exercises\Ex_12.ixx" />
+    <ClCompile Include="exercises\Ex_13.ixx" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PPP.ixx" />
   </ItemGroup>

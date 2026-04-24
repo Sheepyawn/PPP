@@ -1,8 +1,71 @@
+/*
+         Simple calculator
+
+         Revision history:
+         drill6     Add a predefined name k meaning 1000.
+         drill7     Add a square root function sqrt()
+         drill9     Add a pow function pow()
+         drill11    Change the “quit keyword” from quit to exit.
+         exercise2  Provide an assignment operator, '=', for changing the value of defined variable
+         exercise3  Provide predefined variable pi and e.
+         exercise4  Define a class Symbol_table with a member var_table of type vector<Variable> and member functions get(), set(), is_declared(), and declare().
+         exercise5  use '\n' instead of ';'to print.
+         exercise7  Provide a help manual, type 'help' to check.
+         exercise8  Add this grammar.
+
+
+         This program implements a basic expression calculator.
+         Input from cin; output to cout.
+         The grammar for input is:
+
+         Calculate:
+                  Expression
+                  Print
+                  Quit
+                  Help
+         Print:
+                  ";"
+         Quit:
+                  "exit"
+         Help:
+                  "help"
+         Expression:
+                  Term
+                  Expression "+" Term
+                  Expression "-" Term
+         Term:
+                  Secondary
+                  Term "*" Secondary
+                  Term "/" Secondary
+                  Term "%" Secondary
+         Secondary:
+                  Primary
+                  factorial(Primary)
+         Primary:
+                  Number
+                  "(" Expression ")"
+                  "{" Expression "}"
+                  "-" Primary
+                  "+" Primary
+                  Variable
+                  sqrt(Expression)
+                  pow(Expression, Expression)
+                  Declaration
+         Declaration:
+                  "let" Variable = Expression
+         Number:
+                  floating-point-literal
+         Variable:
+                  user-customize string
+
+         Input comes from cin through the Token_stream called ts.
+*/
+
 export module calculator;
 
 export void calculate();
 
-import PPP;
+import std;
 using namespace std;
 
 //继续改进第六章的计算器
@@ -24,6 +87,16 @@ const string powkey = "pow";
 const char underscores = '_';
 const char help = 'H';
 const string helpkey = "help";
+
+void error(std::string s)
+{
+    throw runtime_error(s);
+}
+
+void error(string s1, string s2)
+{
+    throw runtime_error{ s1 + s2 };
+}
 
 
 class Token {
@@ -147,7 +220,7 @@ Token Token_stream::get()
             //否则，创建一个kind为variable, name为s的Token。
             return Token{ variable, s };
         }
-        PPP::error("Bad token");
+        error("Bad token");
         return Token{};
     }
 };
@@ -180,7 +253,7 @@ double Symbol_table::get_value(std::string s)
     for (const Variable& v : var_table)
         if (v.name == s)
             return v.value;
-    PPP::error("trying to read undefined variable ", s);
+    error("trying to read undefined variable ", s);
     return -100;
 }
 
@@ -192,7 +265,7 @@ void Symbol_table::set_value(string s, double d)
             v.value = d;
             return;
         }
-    PPP::error("tring to write undefined variable ", s);
+    error("tring to write undefined variable ", s);
 }
 
 // 检查变量名字是否已定义
@@ -210,7 +283,7 @@ bool Symbol_table::is_declared(string var)
 double Symbol_table::define_name(string var, double val)
 {
     if (is_declared(var))
-        PPP::error(var, " declared twice");
+        error(var, " declared twice");
     var_table.push_back(Variable{ var, val });
     return val;
 }
@@ -238,11 +311,11 @@ double declaration(Token_stream& ts)
 {
     Token t = ts.get();
     if (t.kind != variable)
-        PPP::error("variable expected in declaration");
+        error("variable expected in declaration");
 
     Token t2 = ts.get();
     if (t2.kind != '=')
-        PPP::error("= missing in declaration of ", t.name);
+        error("= missing in declaration of ", t.name);
     //double d = expression(ts);
     double d = expression(ts);
     st.define_name(t.name, d);
@@ -254,14 +327,14 @@ double square_root_func(Token_stream& ts)
 {
     Token t = ts.get();
     if (t.kind != '(')
-        PPP::error("'(' expected after sqrt");
+        error("'(' expected after sqrt");
     //ts.putback(t);            这里不把括号放回去，放回去的话计算sqrt(9) + 1就变成计算sqrt 9 + 1
     double d = expression(ts);
     if (d < 0)
-        PPP::error("argument of sqrt() should be greater than 0");
+        error("argument of sqrt() should be greater than 0");
     t = ts.get();
     if (t.kind != ')')
-        PPP::error("')' expected after sqrt");
+        error("')' expected after sqrt");
     return sqrt(d);
 }
 
@@ -270,19 +343,19 @@ double power_func(Token_stream& ts)
 {
     Token t = ts.get();
     if (t.kind != '(')
-        PPP::error("'(' expected after pow");
+        error("'(' expected after pow");
     //ts.putback(t);    //这里不把括号放回去，因为expression()不能处理逗号
     double d1 = expression(ts);        //获取第一个参数
     t = ts.get();        //调用expression()后，ts的buffer里应该是‘,’。
     if (t.kind != ',')
-        PPP::error("',' expected after the first argument of pow()");
+        error("',' expected after the first argument of pow()");
     double d2 = expression(ts);       //获取第二个参数
     int index = int(d2);
     if (index != d2)
-        PPP::error("index of pow() should be an integer");
+        error("index of pow() should be an integer");
     t = ts.get();
     if (t.kind != ')')
-        PPP::error("')' expected after pow");
+        error("')' expected after pow");
     return pow(d1, d2);
 }
 
@@ -314,14 +387,14 @@ double primary(Token_stream& ts)
     {
         double d = expression(ts);
         t = ts.get();
-        if (t.kind != ')') PPP::error("')' expected");
+        if (t.kind != ')') error("')' expected");
         return d;
     }
     case '{':
     {
         double d = expression(ts);
         t = ts.get();
-        if (t.kind != '}') PPP::error("'}' expected");
+        if (t.kind != '}') error("'}' expected");
         return d;
     }
     case number:
@@ -343,7 +416,7 @@ double primary(Token_stream& ts)
     default:
         if (t.kind == print1)
             ts.putback(t);
-        PPP::error("primary expected");
+        error("primary expected");
         return -1;
     }
 }
@@ -387,7 +460,7 @@ double term(Token_stream& ts)
         case '/':
         {
             double d = secondary(ts);
-            if (d == 0) PPP::error("divide by zero");
+            if (d == 0) error("divide by zero");
             left /= d;
             t = ts.get();
             break;
@@ -396,7 +469,7 @@ double term(Token_stream& ts)
         {
             double d = secondary(ts);
             if (d == 0)
-                PPP::error("%: divide by zero");
+                error("%: divide by zero");
             left = fmod(left, d);       //fmod()，标准库函数 floating-point modulo
             t = ts.get();
             break;
@@ -430,20 +503,19 @@ double expression(Token_stream& ts)         // deal with + and -
     }
 }
 
-
-
 void print_help()
 {
     cout << "This calculator supports '+', '-', '*', '/', '%', '!' operations." << '\n'
-        << "To calculate, type expressions like '1+2', '8/4', '(11%(1+2)!)' and I'll return their answers." << '\n' << '\n'
+        << "    To calculate, type expressions like '1+2', '8/4', '(11%(1+2)!)' and I'll return their answers." << '\n'
         << "Functions of sqrt() for square root and pow() for exponentiation are available too." << '\n'
-        << "To use sqrt(), type sqrt(9) and I'll return the square root of 9 (3)." << '\n'
-        << "To use pow(), type pow(5, 2) and I'll return x to the power of i (25)." << '\n'
-        << "You can use 'let' to define a variable, as 'let x = {2 * (3 + 4) - 5 / 6};'." << '\n' << '\n'
-        << "You can use the variable you have defined in later expressions." << '\n'
-        << "Examples: 'x', 'x+1', 'x%5', 'sqrt(x-2)', and 'pow(2*x, x)'" << '\n'
-        << "Special variables like pi = 3.1415926535, e = 2.7182818284 and k = 1000 are already defined in the calculator." << '\n' << '\n'
-        << "Type a newline (Enter key) to end an expression." << '\n';
+        << "    To use sqrt(), type sqrt(9) and I'll return the square root of 9 (3)." << '\n'
+        << "    To use pow(), type pow(5, 2) and I'll return x to the power of i (25)." << '\n'
+        << "You can use 'let' to define a variable, as 'let x = {2 * (3 + 4) - 5 / 6};'." << '\n'
+        << "    You can use the variable you have defined in later expressions." << '\n'
+        << "    Examples: 'x', 'x+1', 'x%5', 'sqrt(x-2)', and 'pow(2*x, x)'" << '\n'
+        << "    Special variables like pi = 3.1415926535, e = 2.7182818284 and k = 1000 are already defined in the calculator." << '\n'
+        << "Type a newline (Enter key) to end an expression." << '\n'
+        << "Type 'exit' to exit the program." << '\n';
 }
 
 void calculate()
