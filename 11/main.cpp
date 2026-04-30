@@ -7,7 +7,6 @@ using namespace Graph_lib;
 
 
 int main()
-//  draw two lines
 {
     try
     {
