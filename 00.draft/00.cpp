@@ -1,9 +1,9 @@
 import PPP;
 using namespace std;
 
+import haha;
+
 int main()
 {
-	string c;
-	char s = '0' + 5;
-	cout << s << '\n';
+	haha();
 }
