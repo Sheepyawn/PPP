@@ -45,31 +45,31 @@
   <Project Path="11/11.vcxproj" Id="78fba444-8e58-4415-8b6d-694ce8a9c2bb">
     <Platform Project="x64" />
   </Project>
-  <Project Path="12.drill/12.drill.vcxproj">
+  <Project Path="12.drill/12.drill.vcxproj" Id="b9e79cee-e791-4f95-9bef-8eda4e7a26d5">
     <Platform Project="x64" />
   </Project>
-  <Project Path="12.exercises/12.exercises.vcxproj">
+  <Project Path="12.exercises/12.exercises.vcxproj" Id="666a76a4-9311-4621-8d18-05685e4263bc">
     <Platform Project="x64" />
   </Project>
   <Project Path="12/12.vcxproj" Id="53d7076f-0ace-4e22-8451-5a8dae2dc143">
     <Platform Project="x64" />
   </Project>
-  <Project Path="13.drill/13.drill.vcxproj">
+  <Project Path="13.drill/13.drill.vcxproj" Id="184a7f7b-3d7c-45a5-a2ea-afecfa7b9938">
     <Platform Project="x64" />
   </Project>
-  <Project Path="13.exercises/13.exercises.vcxproj">
+  <Project Path="13.exercises/13.exercises.vcxproj" Id="3a6d191c-9d41-4217-b75b-56ad2ba3b25a">
     <Platform Project="x64" />
   </Project>
-  <Project Path="13/13.vcxproj">
+  <Project Path="13/13.vcxproj" Id="f2811480-23a5-409f-8d9d-3258c2994abd">
     <Platform Project="x64" />
   </Project>
-  <Project Path="14.drill/14.drill.vcxproj">
+  <Project Path="14.drill/14.drill.vcxproj" Id="4d2c7e63-837b-4d6f-b2c5-49e5c66e0144">
     <Platform Project="x64" />
   </Project>
-  <Project Path="14.exercises/14.exercises.vcxproj">
+  <Project Path="14.exercises/14.exercises.vcxproj" Id="b2eabd41-abbd-4a81-b503-e37efb22d88f">
     <Platform Project="x64" />
   </Project>
-  <Project Path="14/14.vcxproj">
+  <Project Path="14/14.vcxproj" Id="049221d6-b149-478d-b408-270269b142c8">
     <Platform Project="x64" />
   </Project>
 </Solution>

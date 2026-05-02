@@ -1,11 +1,15 @@
 // 实现图书类
-// 成员有：ISBN、title、author、copyright date、checked out(书是否已被。
+// 成员有：ISBN、title、author、copyright date、checked out（书是否已被借出）。
 
 export module Ex_05;
 
 export void Ex_05();
+export class Book;
+export class ISBN;
+export enum class Genre;
 
 import PPP;
+import functions;
 using namespace std;
 
 class ISBN
@@ -13,6 +17,15 @@ class ISBN
 public:
 	ISBN(int, int, int, char);
 	bool valid();
+	int get_group() const { return group; }
+	int get_publisher() const { return publisher; }
+	int get_title() const { return title; }
+	char get_check() const { return check; }
+	bool operator==(const ISBN& other) const
+	{ 
+		return group == other.group && publisher == other.publisher && title == other.title;
+	}
+	string string_ISBN() const;
 private:
 	int group;
 	int publisher;
@@ -22,19 +35,16 @@ private:
 
 ISBN::ISBN(int g, int p, int t, char c):group(g), publisher(p), title(t), check(c)
 {
-	if (!valid)
-		PPP::error("Invalid ISBN");
+	if (!valid())
+		PPP::error("Invalid ISBN: " + string_ISBN());
 }
 
-// 获取整数的位数。正负数都可以。
-int get_digit(int num)
+string ISBN::string_ISBN() const
 {
-	if (num == 0)
-		return 1;
-	int digit = 0;
-	for (; num != 0 ; ++digit)
-		num /= 10;
-	return digit;
+	return 	to_string(group) + '-' +
+			to_string(publisher) + '-' +
+			to_string(title) + '-' +
+			check;			// check本身就是字符，不需要to_string
 }
 
 bool ISBN::valid()
@@ -58,11 +68,14 @@ bool ISBN::valid()
 		return false;
 	if ((group_digit + publisher_digit + title_digit) != valid_digits - 1)
 		return false;
+	if (!(('0' <= check && check <= '9') || check == 'X'))
+		PPP::error("The check digit of " + string_ISBN() + " should be a character between '0' and '9' or 'X'.");
 
-	// 计算并检验ISBN的有效位。
+	// 计算并检验ISBN的有效位：
 	int multiplier = 2;
 	int sum = 0;
-	// 从低位到高位，每次对10取模，获得最低位的数；再乘以权重。
+
+	// 从低位到高位。每次对10取模，获得最低位的数；再乘以权重。
 	for (int i = title; i > 0; i /= 10)
 	{
 		sum += (i % 10) * multiplier;
@@ -98,26 +111,57 @@ bool ISBN::valid()
 	return true;
 }
 
+enum class Genre
+{
+	fiction, nonfiction, periodical, biography, children
+};
+
 class Book
 {
 public:
-	Book(ISBN, string, string, string);
+	Book(string, string, int, ISBN, Genre);
 	ISBN get_ISBN() const { return isbn; }
 	string get_title() const { return title; }
 	string get_author() const { return author; }
-	string get_copyright_date() const { return copyright_date; }
+	int get_copyright_date() const { return copyright_date; }
+	Genre get_genre() const { return genre; }
 	bool is_checked_out() const { return checked_out; }
 	void check_in() { checked_out = false; }				// 还书
-	void check_out() { checked_out = true; }			// 借书
+	void check_out() { checked_out = true; }				// 借书
 private:
-	ISBN isbn;
 	string title;
 	string author;
-	string copyright_date;
-	bool checked_out = false;
+	int copyright_date;
+	ISBN isbn;
+	Genre genre;
+	bool checked_out = false;				// 默认未借出
 };
 
-Book::Book(ISBN isbn, string p, string t, string v)
+Book::Book(string t, string a, int cd, ISBN isbn, Genre g): title{t}, author{a}, copyright_date{cd}, isbn{ isbn }, genre{g}
 {
-	
+	constexpr int max_copyright_date = 2026;				// 最大版权年份
+	constexpr int min_copyright_date = 1000;				// 最小版权年份
+	constexpr int max_title_size = 500;						// 最长标题长度
+	constexpr int max_author_size = 50;						// 最长作者长度
+	// 检查title的有效性
+	if (t.size() == 0 || max_title_size < t.size())
+		PPP::error("Invalid title");
+	// 检查author的有效性
+	if (a.size() == 0 || max_author_size < a.size())
+		PPP::error("Invalid author");
+	// 检查copyright_date的有效性
+	if (copyright_date < min_copyright_date || max_copyright_date < copyright_date)
+		PPP::error("Invalid copyright date");
+
+	// ISBN的有效性在构造时就已经检查过了。
+}
+
+void Ex_05()
+{
+	Book b1("Programming:principles and practice using C++", "Bjarne Stroustrup", 2014, ISBN(0, 321, 99278, '4'), Genre::nonfiction);
+	cout << b1.is_checked_out() << '\n';
+	b1.check_out();
+	cout << b1.is_checked_out() << '\n';
+	Book b2("A Tour of C++", "Bjarne Stroustrup", 2023, ISBN(0, 13, 681648, '8'), Genre::nonfiction);				// The correct check digit should be '7'.
+	//Book b3("Flatland", "Edwin A.Abbott", 2006, ISBN(0, 19, 280598, 3), Genre::fiction);
 }

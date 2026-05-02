@@ -1,6 +1,7 @@
 export module functions;
 
 export double get_double();
+export int get_digit(int num);
 
 import PPP;
 using namespace std;
@@ -34,4 +35,15 @@ double get_double()
 		cout << "Sorry, that was not a number; please try again " << '\n';
 		skip_to_double();
 	}
+}
+
+int get_digit(int num)
+// 获取整数的位数。正负数都可以。
+{
+	if (num == 0)
+		return 1;
+	int digit = 0;
+	for (; num != 0; ++digit)
+		num /= 10;
+	return digit;
 }

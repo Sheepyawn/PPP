@@ -3,4 +3,7 @@ export module exercises;
 export import Ex_02;
 export import Ex_03;
 export import Ex_04;
+export import Ex_05;
+export import Ex_06;
+export import Ex_07;
 
