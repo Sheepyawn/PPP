@@ -45,13 +45,8 @@
   <Project Path="11/11.vcxproj" Id="78fba444-8e58-4415-8b6d-694ce8a9c2bb">
     <Platform Project="x64" />
   </Project>
-  <Project Path="12.drill/12.drill.vcxproj" Id="b9e79cee-e791-4f95-9bef-8eda4e7a26d5">
-    <Platform Project="x64" />
-  </Project>
+  <Project Path="12.drill/12.drill.vcxproj" Id="edd96ba1-042b-4520-b485-6b7bbc03e5da" />
   <Project Path="12.exercises/12.exercises.vcxproj" Id="666a76a4-9311-4621-8d18-05685e4263bc">
-    <Platform Project="x64" />
-  </Project>
-  <Project Path="12/12.vcxproj" Id="53d7076f-0ace-4e22-8451-5a8dae2dc143">
     <Platform Project="x64" />
   </Project>
   <Project Path="13.drill/13.drill.vcxproj" Id="184a7f7b-3d7c-45a5-a2ea-afecfa7b9938">
