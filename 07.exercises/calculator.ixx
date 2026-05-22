@@ -315,7 +315,10 @@ double declaration(Token_stream& ts)
 
     Token t2 = ts.get();
     if (t2.kind != '=')
+    {
+        ts.putback(t2);         // 
         error("= missing in declaration of ", t.name);
+    }
     //double d = expression(ts);
     double d = expression(ts);
     st.define_name(t.name, d);
