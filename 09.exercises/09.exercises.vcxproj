@@ -160,6 +160,7 @@
     <ClCompile Include="exercises\Ex_20.ixx" />
     <ClCompile Include="exercises\Ex_21.ixx" />
     <ClCompile Include="exercises\Ex_23.ixx" />
+    <ClCompile Include="exercises\Ex_25.ixx" />
     <ClCompile Include="exercises\functions.ixx" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PPP.ixx" />
@@ -180,6 +181,7 @@
     <Text Include="exercises\Ex_23_file1.txt" />
     <Text Include="exercises\Ex_23_file2.txt" />
     <Text Include="exercises\Ex_23_output.txt" />
+    <Text Include="exercises\Ex_25_expressions.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

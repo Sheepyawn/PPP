@@ -20,3 +20,4 @@ export import Ex_20;
 export import Ex_21;
 export import Ex_22;
 export import Ex_23;
+export import Ex_25;
