@@ -113,11 +113,16 @@ Token Token_stream::get()
         return buffer;
     }
     char ch = ' ';
-    while (ch != '\n' && isspace(ch) && is.good())
+    while (ch != '\n' && isspace(ch))
     {
         is.get(ch);
         if (is.eof())
+        {
             ch = '\n';
+            break;
+        }
+        if (is.fail())
+            error("istream is fail");
     }
 
     switch (ch) {
@@ -198,8 +203,11 @@ void Token_stream::ignore(char c)
     while (is.get(ch))
         if (ch == c)
             return;
-    if (!is)
+    if (is.eof())       // 读取到文件末尾
+        return;
+    if (!is)            // 处理1+2e等错误。e被识别为科学计数法的标志，而不是字母
         is.clear();
+    return;
 }
 
 void clean_up_mess(Token_stream& ts)
@@ -324,12 +332,20 @@ double power_func(Token_stream& ts)
 string string_result(double d)
 {
     string s = to_string(d);
-    const int last = static_cast<int>(s.size()) - 1;
-    for (int i = last; 0 < i; --i)
+    const int size = static_cast<int>(s.size());
+    int point = 0;
+    for (int i = 0; i < size; ++i)
+        if (s[i] == '.')
+            point = i;                      // 获取小数点的位置，没有小数点则位置为第一个。
+    if (point)
     {
-        if (s[i] != '0' && s[i] != '.')
-            break;
-        s.erase(i, 1);
+        const int last = size - 1;
+        for (int i = last; point <= i; --i)          // 0 < i：不用管第一个字符
+        {
+            if (s[i] != '0' && s[i] != '.')
+                break;
+            s.erase(i, 1);
+        }
     }
     return s;
 }
@@ -340,8 +356,9 @@ double Token_stream::get_from_file()
 // 把is为ifs的Tokens_sream传给exprssion, 获取结果。
 // 把结果存进results数组
 {
-    string filename;
-    is >> filename;             // from exercises/Ex_25_expressions.txt
+    string filename = "exercises/Ex_25_expressions.txt";
+    //string filename;
+    //is >> filename;             // from exercises/Ex_25_expressions.txt
     ifstream ifs{ filename };
     if (!ifs)
         error("can't open file: " + filename);
@@ -351,12 +368,13 @@ double Token_stream::get_from_file()
         try
         {
             Token tf = tfs.get();
-            if (tf.kind != print1)
-                tfs.putback(tf);        // 这个程序是输入空格打印，而读文件读到空格或者换行会尝试打印而报错。所以这里把空格“吃掉”。
+            while (tf.kind == print1)
+                tf = tfs.get();       // 这个程序是输入空格打印，而读文件读到空格或者换行会尝试打印而报错。所以这里把空格“吃掉”。
             if (tf.kind == quit)
                 return 1;
             if (tf.kind == help)
                 error("can't help you in a file");
+            tfs.putback(tf);
             double result = expression(tfs);
             results.push_back(string_result(result));
         }
@@ -371,8 +389,9 @@ double Token_stream::get_from_file()
 
 double Token_stream::fill_to_file()
 {
-    string filename;
-    is >> filename;             // to exercises/Ex_25_output.txt
+    string filename = "exercises/Ex_25_output.txt";
+    //string filename;
+    //is >> filename;             // to exercises/Ex_25_output.txt
     ofstream ofs{ filename };
     if (!ofs)
         error("can't open file: " + filename);

@@ -161,6 +161,7 @@
     <ClCompile Include="exercises\Ex_21.ixx" />
     <ClCompile Include="exercises\Ex_23.ixx" />
     <ClCompile Include="exercises\Ex_25.ixx" />
+    <ClCompile Include="exercises\Ex_26.ixx" />
     <ClCompile Include="exercises\functions.ixx" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PPP.ixx" />
