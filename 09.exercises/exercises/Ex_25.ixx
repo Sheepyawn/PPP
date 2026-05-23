@@ -341,7 +341,7 @@ double Token_stream::get_from_file()
 // 把结果存进results数组
 {
     string filename;
-    is >> filename;             // from exercises/Ex_25_expressions.txt;
+    is >> filename;             // from exercises/Ex_25_expressions.txt
     ifstream ifs{ filename };
     if (!ifs)
         error("can't open file: " + filename);
@@ -350,6 +350,13 @@ double Token_stream::get_from_file()
     {
         try
         {
+            Token tf = tfs.get();
+            if (tf.kind != print1)
+                tfs.putback(tf);        // 这个程序是输入空格打印，而读文件读到空格或者换行会尝试打印而报错。所以这里把空格“吃掉”。
+            if (tf.kind == quit)
+                return 1;
+            if (tf.kind == help)
+                error("can't help you in a file");
             double result = expression(tfs);
             results.push_back(string_result(result));
         }
@@ -359,7 +366,7 @@ double Token_stream::get_from_file()
             clean_up_mess(tfs);
         }
     }
-    return 1;
+    return 1;           // 总得返回点什么，返回1代表true。
 }
 
 double Token_stream::fill_to_file()

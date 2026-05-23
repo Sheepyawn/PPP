@@ -1,10 +1,4 @@
 = 3
-= primary expected
 = 3.3
 = primary expected
-= primary expected
-= 3
-= primary expected
-= 3.3
-= primary expected
-= primary expected
+= can't help you in a file
