@@ -161,7 +161,7 @@ Token Token_stream::get()
         return buffer;
     }
     char ch = ' ';
-    while (ch != '\n' && isspace(ch))
+    while (ch != '\n' && isspace(ch) && cin.good())
         cin.get(ch);
 
     switch (ch) {

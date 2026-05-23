@@ -14,6 +14,7 @@ const char number = '8';
 const char quit = 'Q';
 const string quitkey = "exit";
 const char print1 = '\n';
+//const char print1 = ';';
 const string prompt = ">";
 //const string result = "= ";
 const char variable = 'v';
@@ -67,6 +68,7 @@ public:
     void putback(Token t);      // put a token back
     void ignore(char c);
     double get_from_file();
+    double fill_to_file();
 private:
     bool full{ false };         // is there a Token in the buffer?
     Token buffer{ '0' };        // here is where putback() stores a Token
@@ -95,7 +97,7 @@ private:
 
 //定义需要用的全局变量。
 Symbol_table st;
-vector<double> results;
+vector<string> results;
 
 void Token_stream::putback(Token t)
 {
@@ -201,6 +203,7 @@ void Token_stream::ignore(char c)
 void clean_up_mess(Token_stream& ts)
 {
     ts.ignore('\n');
+    //ts.ignore(';');
 }
 
 double Symbol_table::get_value(std::string s)
@@ -316,6 +319,18 @@ double power_func(Token_stream& ts)
     return pow(d1, d2);
 }
 
+string string_result(double d)
+{
+    string s = to_string(d);
+    const int last = static_cast<int>(s.size()) - 1;
+    for (int i = last; 0 < i; --i)
+    {
+        if (s[i] != '0' && s[i] != '.')
+            break;
+        s.erase(i, 1);
+    }
+    return s;
+}
 
  //从文件中读取数据并计算，然后存入results数组
 double Token_stream::get_from_file()
@@ -324,16 +339,39 @@ double Token_stream::get_from_file()
 // 把结果存进results数组
 {
     string filename;
-    is >> filename;             // from exercises/Ex_25_expressions.txt
+    is >> filename;             // from exercises/Ex_25_expressions.txt;
     ifstream ifs{ filename };
     if (!ifs)
         error("can't open file: " + filename);
     Token_stream tfs{ ifs };
     while (ifs)
     {
-        double result = expression(tfs);
-        results.push_back(result);
+        try
+        {
+            double result = expression(tfs);
+            results.push_back(string_result(result));
+        }
+        catch (exception& e)
+        {
+            results.push_back(e.what());
+            clean_up_mess(tfs);
+        }
     }
+    return 1;
+}
+
+double Token_stream::fill_to_file()
+{
+    string filename;
+    is >> filename;             // to exercises/Ex_25_output.txt
+    ofstream ofs{ filename };
+    if (!ofs)
+        error("can't open file: " + filename);
+    if (results.size() == 0)
+        error("there are no results available");
+    for (string x : results)
+        ofs << "= " << x << '\n';
+    results.clear();            // 输出到文件后清空数组。
     return 1;
 }
 
@@ -393,6 +431,8 @@ double primary(Token_stream& ts)
         return power_func(ts);
     case from:
         return ts.get_from_file();
+    case to:
+        return ts.fill_to_file();
     default:
         if (t.kind == print1)
             ts.putback(t);
@@ -502,7 +542,7 @@ void print_help()
 void calculate()
 {
     st.define_name("pi", 3.1415926535);
-    st.define_name("e", 2.7182818284);
+    //st.define_name("e", 2.7182818284);
     st.define_name("k", 1000);
     cout << "Simple Calculator (type 'help' for manual)" << '\n';
     Token_stream ts{ cin };

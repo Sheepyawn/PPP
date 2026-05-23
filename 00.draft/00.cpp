@@ -5,8 +5,7 @@ const string fname = "00.txt";
 
 int main()
 {
-	string x;
-	cin >> x;
-	for (char y : x)
-		cout << y;
+	string s = "abcdef";
+	s.erase(4, 1);
+	cout << s;
 }
