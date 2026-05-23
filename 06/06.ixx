@@ -238,6 +238,8 @@ void Token_stream::ignore(char c)
     while (cin.get(ch))
         if (ch == c)
             return;
+    if (!cin)
+        cin.clear();
 }
 
 void clean_up_mess()

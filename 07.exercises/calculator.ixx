@@ -241,6 +241,8 @@ void Token_stream::ignore(char c)
     while (is.get(ch))
         if (ch == c)
             return;
+    if (!is)
+        is.clear();         // 输入 1 + 2e会报错，恢复is的状态
 }
 
 void clean_up_mess(Token_stream& ts)

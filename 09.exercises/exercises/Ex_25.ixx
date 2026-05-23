@@ -113,7 +113,7 @@ Token Token_stream::get()
         return buffer;
     }
     char ch = ' ';
-    while (ch != '\n' && isspace(ch))
+    while (ch != '\n' && isspace(ch) && is.good())
     {
         is.get(ch);
         if (is.eof())
@@ -198,6 +198,8 @@ void Token_stream::ignore(char c)
     while (is.get(ch))
         if (ch == c)
             return;
+    if (!is)
+        is.clear();
 }
 
 void clean_up_mess(Token_stream& ts)
@@ -542,7 +544,7 @@ void print_help()
 void calculate()
 {
     st.define_name("pi", 3.1415926535);
-    //st.define_name("e", 2.7182818284);
+    st.define_name("e", 2.7182818284);
     st.define_name("k", 1000);
     cout << "Simple Calculator (type 'help' for manual)" << '\n';
     Token_stream ts{ cin };
