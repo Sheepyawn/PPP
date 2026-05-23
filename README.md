@@ -6,7 +6,7 @@ It mainly contains example code from the book and solutions I wrote to solve its
 
 Sample programs:
 
-Game Bulls and Cows from exercise 12 of chapter 4.
+Game Bulls and Cows from exercise 12 of chapter 4:
 ![img](img/2026-04-23-17-07-25.png)
 
 Simple calculator from chapter 6:
@@ -15,5 +15,10 @@ Simple calculator from chapter 6:
 Design and implement classes: Book, Patron, Library, Date, Money, from exercises of chapter 8:
 ![img](img/2026-05-08-20-48-55.png)
 
-Superellipses drawn by using the GUI library provided by the book, from exercise 12 of chapter 10.
+Add commands to the simple calculator from chapter 6 that makes it take input from a file and output to a file. From exercise 25 of chapter 9:
+![img](img/2026-05-23-14-04-55.png)
+![img](img/2026-05-23-14-05-22.png)
+![img](img/2026-05-23-14-05-34.png)
+
+Superellipses drawn by using the GUI library provided by the book, from exercise 12 of chapter 10:
 ![img](img/2026-04-23-17-07-53.png)
