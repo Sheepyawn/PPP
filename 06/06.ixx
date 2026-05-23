@@ -239,9 +239,9 @@ void Token_stream::ignore(char c)
         if (ch == c)
             return;
     if (!cin)
-        cin.clear();
-}
-
+        cin.clear();            // 输入 1 + 2e会报错，恢复is的状态。
+}                               // 在第9章，读取到文件末尾，设置流状态为eof，会进入死循
+                                // 不过我在那里修好了。这里不从文件读取，应该没问题吧。
 void clean_up_mess()
 {
     ts.ignore('\n');
