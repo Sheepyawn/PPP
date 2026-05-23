@@ -161,8 +161,12 @@ Token Token_stream::get()
         return buffer;
     }
     char ch = ' ';
-    while (ch != '\n' && isspace(ch) && cin.good())
+    while (ch != '\n' && isspace(ch))       // if istream is fail (1+2e), report an error
+    {
         cin.get(ch);
+        if (cin.fail())
+            error("cin is fail");
+    }
 
     switch (ch) {
     case '\n':
