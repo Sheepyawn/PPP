@@ -112,5 +112,6 @@
     <Text Include="exercises\Ex_23_output.txt" />
     <Text Include="exercises\Ex_25_expressions.txt" />
     <Text Include="exercises\Ex_25_output.txt" />
+    <Text Include="exercises\Ex_26_input.txt" />
   </ItemGroup>
 </Project>

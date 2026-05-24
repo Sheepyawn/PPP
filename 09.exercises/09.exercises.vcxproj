@@ -184,6 +184,7 @@
     <Text Include="exercises\Ex_23_output.txt" />
     <Text Include="exercises\Ex_25_expressions.txt" />
     <Text Include="exercises\Ex_25_output.txt" />
+    <Text Include="exercises\Ex_26_input.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
