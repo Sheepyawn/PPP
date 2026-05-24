@@ -1,4 +1,4 @@
-﻿# C++ study by PPP
+# C++ study by PPP
 
 I created this project when I started learning from the book *Programming: Principles and Practice Using C++* (3rd Edition) by Bjarne Stroustrup.
 
@@ -16,10 +16,9 @@ Design and implement classes: Book, Patron, Library, Date, Money (from exercises
 ![img](img/2026-05-08-20-48-55.png)
 
 Add commands to the simple calculator from chapter 6 to let it take input from a file and output results to another file (from exercise 25 of chapter 9):
-
-![img](img/2026-05-23-14-04-55.png)
-![img](img/2026-05-23-14-05-22.png)
-![img](img/2026-05-23-14-05-34.png)
+![img](img/2026-05-24-08-50-41.png)
+![img](img/2026-05-24-08-50-50.png)
+![img](img/2026-05-24-08-50-57.png)
 
 Superellipses drawn by using the GUI library provided by the book (from exercise 12 of chapter 10).
 ![img](img/2026-04-23-17-07-53.png)
