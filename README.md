@@ -17,9 +17,7 @@ Design and implement classes: Book, Patron, Library, Date, Money (from exercises
 
 Add the commands "from" and "to" to the simple calculator from chapter 6,
 and enable it to take input from a file and output results to another file (from exercise 25 of chapter 9):
-![img](img/2026-05-24-08-50-41.png)
-![img](img/2026-05-24-08-50-50.png)
-![img](img/2026-05-24-08-50-57.png)
+![img](img/2026-05-24-09-31-18.png)
 
 Superellipses drawn by using the GUI library provided by the book (from exercise 12 of chapter 10).
 ![img](img/2026-04-23-17-07-53.png)
