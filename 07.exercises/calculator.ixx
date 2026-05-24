@@ -167,8 +167,6 @@ Token Token_stream::get()
     while (ch != '\n' && isspace(ch))       // if istream is fail (1+2e), report an error
     {
         is.get(ch);
-        if (is.fail())
-            error("istream is fail");
     }
 
     switch (ch) {
@@ -195,6 +193,11 @@ Token Token_stream::get()
         is.putback(ch);
         double val;
         is >> val;
+        if (!is)             // 输入2e，在上面读取2时不会被检测到，在这里尝试读取2e就会报错。
+        {
+            is.clear();
+            error("Bad token");
+        }
         return Token{ number, val };
     }
     default:
@@ -245,10 +248,6 @@ void Token_stream::ignore(char c)
     while (is.get(ch))
         if (ch == c)
             return;
-    if (!is)
-        is.clear();         // 输入 1 + 2e会报错，恢复is的状态。
-                            // 在第9章，读取到文件末尾，设置流状态为eof，会进入死循环。
-                            // 不过我在那里修好了。这里不从文件读取，应该没问题吧。
 }
 
 void clean_up_mess(Token_stream& ts)

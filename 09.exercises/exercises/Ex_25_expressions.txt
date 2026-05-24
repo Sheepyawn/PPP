@@ -3,8 +3,10 @@
 1 + 
 help
 
-pow(3, 2) + sqrt(25)
-let x = 10
-x % (6/2)
+let x = pow(3, 2) + sqrt(25)
+let y = 10
+x % y
 x + pi
 x = 5
+x!
+2e

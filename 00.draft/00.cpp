@@ -5,7 +5,14 @@ const string fname = "00.txt";
 
 int main()
 {
-	string s = "abcdef";
-	s.erase(4, 1);
-	cout << s;
+	double x = -1;
+	char ch;
+	cin.get(ch);
+	if (cin)
+	{
+		cin.putback(ch);
+		cin >> x;
+		cout << x << '\n';
+	}
+	cout << x;
 }

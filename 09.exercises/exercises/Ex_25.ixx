@@ -33,6 +33,7 @@ const string fromkey = "from";
 const char to = 't';
 const string tokey = "to";
 const char file = 'F';
+const char bad = '#';
 
 void error(std::string s)
 {
@@ -117,12 +118,7 @@ Token Token_stream::get()
     {
         is.get(ch);
         if (is.eof())
-        {
-            ch = '\n';
-            break;
-        }
-        if (is.fail())
-            error("istream is fail");
+            return Token{ quit };
     }
 
     switch (ch) {
@@ -149,6 +145,11 @@ Token Token_stream::get()
         is.putback(ch);
         double val;
         is >> val;
+        if (!is)             // 输入2e，在上面读取2时不会被检测到，在这里尝试读取2e就会报错。
+        {
+            is.clear();
+            error("Bad token");
+        }
         return Token{ number, val };
     }
     default:
@@ -203,17 +204,11 @@ void Token_stream::ignore(char c)
     while (is.get(ch))
         if (ch == c)
             return;
-    if (is.eof())       // 读取到文件末尾
-        return;
-    if (!is)            // 处理1+2e等错误。e被识别为科学计数法的标志，而不是字母
-        is.clear();
-    return;
 }
 
 void clean_up_mess(Token_stream& ts)
 {
     ts.ignore('\n');
-    //ts.ignore(';');
 }
 
 double Symbol_table::get_value(std::string s)
@@ -356,9 +351,9 @@ double Token_stream::get_from_file()
 // 把is为ifs的Tokens_sream传给exprssion, 获取结果。
 // 把结果存进results数组
 {
-    string filename = "exercises/Ex_25_expressions.txt";
-    //string filename;
-    //is >> filename;             // from exercises/Ex_25_expressions.txt
+    //string filename = "exercises/Ex_25_expressions.txt";
+    string filename;
+    is >> filename;             // from exercises/Ex_25_expressions.txt
     ifstream ifs{ filename };
     if (!ifs)
         error("can't open file: " + filename);
@@ -389,9 +384,9 @@ double Token_stream::get_from_file()
 
 double Token_stream::fill_to_file()
 {
-    string filename = "exercises/Ex_25_output.txt";
-    //string filename;
-    //is >> filename;             // to exercises/Ex_25_output.txt
+    //string filename = "exercises/Ex_25_output.txt";
+    string filename;
+    is >> filename;             // to exercises/Ex_25_output.txt
     ofstream ofs{ filename };
     if (!ofs)
         error("can't open file: " + filename);

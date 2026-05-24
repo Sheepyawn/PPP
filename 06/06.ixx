@@ -192,6 +192,11 @@ Token Token_stream::get()
         cin.putback(ch);
         double val;
         cin >> val;
+        if (!cin)             // 输入2e，在上面读取2时不会被检测到，在这里尝试读取2e就会报错。
+        {
+            cin.clear();
+            error("Bad token");
+        }
         return Token{ number, val };
     }
     default:
@@ -242,10 +247,8 @@ void Token_stream::ignore(char c)
     while (cin.get(ch))
         if (ch == c)
             return;
-    if (!cin)
-        cin.clear();            // 输入 1 + 2e会报错，恢复is的状态。
-}                               // 在第9章，读取到文件末尾，设置流状态为eof，会进入死循
-                                // 不过我在那里修好了。这里不从文件读取，应该没问题吧。
+}
+ 
 void clean_up_mess()
 {
     ts.ignore('\n');
